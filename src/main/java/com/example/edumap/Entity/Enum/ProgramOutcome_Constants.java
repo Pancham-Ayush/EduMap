@@ -3,7 +3,7 @@ package com.example.edumap.Entity.Enum;
 import lombok.Getter;
 
 @Getter
-public enum ProgramOutcome {
+public enum ProgramOutcome_Constants {
 
     PO1("Engineering Knowledge",
             "Apply mathematics, science, and engineering fundamentals to solve complex engineering problems"),
@@ -44,7 +44,7 @@ public enum ProgramOutcome {
     private final String title;
     private final String description;
 
-    ProgramOutcome(String title, String description) {
+    ProgramOutcome_Constants(String title, String description) {
         this.title = title;
         this.description = description;
     }
