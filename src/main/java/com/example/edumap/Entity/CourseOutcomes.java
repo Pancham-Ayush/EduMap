@@ -1,5 +1,7 @@
 package com.example.edumap.Entity;
 import com.example.edumap.Entity.Enum.ProgramOutcome_Constants;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +21,7 @@ public class CourseOutcomes
 
     @ManyToOne
     @JoinColumn(name = "courseCode")
+    @JsonBackReference
     private Course course;
 
     private String description;
