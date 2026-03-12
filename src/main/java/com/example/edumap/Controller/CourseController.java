@@ -24,7 +24,13 @@ public class CourseController {
 
     @PostMapping("/course")
     ResponseEntity<Course> addCourse(@RequestBody Course course) {
-        Course temp = courseService.addCourse(course.getCourseCode(),course.getCourseName(), course.getCourseDescription());
+
+        Course temp = courseService.addCourse(
+                course.getCourseCode(),
+                course.getCourseName(),
+                course.getCourseDescription()
+        );
+
         return ResponseEntity.ok(temp);
     }
 

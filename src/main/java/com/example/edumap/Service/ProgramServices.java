@@ -2,9 +2,10 @@ package com.example.edumap.Service;
 
 import com.example.edumap.Entity.Course;
 import com.example.edumap.Entity.CourseOutcomes;
-import com.example.edumap.Entity.Enum.ProgramOutcome_Constants;
 import com.example.edumap.Entity.ProgramOutcomes;
 import com.example.edumap.Repository.CourseRepo;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -13,18 +14,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ProgramServices {
 
     @Value("classpath:prompt/po_co.txt")
     private Resource prompt;
 
+    @Value("classpath:prompt/keyword_prompt")
+    private Resource semantic;
+
     private final ChatClient chatClient;
 
     private final CourseRepo courseRepo;
-    ProgramServices(ChatClient chatClient, CourseRepo courseRepo) {
+    public ProgramServices(ChatClient chatClient, CourseRepo courseRepo) {
         this.chatClient = chatClient;
         this.courseRepo = courseRepo;
     }
@@ -52,4 +58,16 @@ public class ProgramServices {
         }
         courseRepo.save(course);
     }
+
+    public List<String> getKeyWords(String courseOutcome){
+      return Objects.requireNonNull(chatClient
+              .prompt()
+              .user(u -> u.text(semantic).params(Map.of("CO",courseOutcome)))
+              .call()
+              .entity(response.class)).keyword;
+    }
+
+    record response(List<String> keyword){}
+
+
 }
