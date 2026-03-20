@@ -1,6 +1,5 @@
 package com.example.edumap.Entity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.CascadeType;
+import com.example.edumap.Entity.CO.CourseOutcomes;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -26,8 +25,7 @@ public class Course {
 
     private String courseDescription;
 
-    @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
-    @JsonManagedReference
-    List<CourseOutcomes> COes = new ArrayList<>();
+    @OneToMany
+    private List<CourseOutcomes> courseOutcomesList=new ArrayList<>();
 
 }
