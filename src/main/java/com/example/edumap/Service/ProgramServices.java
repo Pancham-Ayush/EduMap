@@ -1,11 +1,9 @@
 package com.example.edumap.Service;
 
 import com.example.edumap.Entity.Course;
-import com.example.edumap.Entity.CourseOutcomes;
-import com.example.edumap.Entity.ProgramOutcomes;
+import com.example.edumap.Entity.CO.CourseOutcomes;
 import com.example.edumap.Repository.CourseRepo;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
