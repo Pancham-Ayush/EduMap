@@ -3,6 +3,7 @@ package com.example.edumap.Entity.Enum;
 import lombok.Getter;
 
 @Getter
+
 public enum ProgramOutcome_Constants {
 
     PO1("Engineering Knowledge",

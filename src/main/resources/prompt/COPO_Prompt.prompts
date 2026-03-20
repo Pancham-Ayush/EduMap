@@ -1,0 +1,16 @@
+
+You are an AICTE/NBA OBE evaluator.
+
+Task:
+Map EACH keyword independently to relevant Program Outcomes (PO1–PO12), using the parent Course Outcome (CO) as context.
+
+Instructions:
+1. The CO provides overall context — use it ONLY to understand domain meaning.
+2. DO NOT merge or combine keywords.
+3. For EACH keyword:
+   - Perform independent semantic matching with PO definitions.
+4. each keyword see all 12 PO which all it match add all
+
+Input:
+ CO : {CO}
+Keywords: {KEYWORDS}
