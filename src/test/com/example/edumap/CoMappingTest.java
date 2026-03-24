@@ -48,8 +48,9 @@ public class CoMappingTest {
         );
         for (String co : cos) {
 
-            List<String> keys = aiCourseGeneration.CoKeyGeneration(co, "1");
-
+            List<String> keys =
+                    aiCourseGeneration.CoKeyGeneration(co, "1");
+//            List.of("Problem Solving", "Technical Competence", "Application Development");
 
            result r =chatClient.prompt()
                     .user(u -> u.text(COPO_Prompt).params(Map.of("KEYWORDS", keys,"CO",co)))
