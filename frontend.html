@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CO-PO Mapping</title>
+
+    <style>
+        body { font-family: Arial; margin: 20px; }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .cell {
+            cursor: pointer;
+        }
+
+        /* popup */
+        .popup {
+            position: fixed;
+            top: 10%;
+            left: 25%;
+            width: 50%;
+            background: white;
+            border: 2px solid black;
+            padding: 20px;
+            display: none;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>CO-PO Mapping System 🚀</h2>
+
+<label>Course Code: </label>
+<input type="text" id="courseCode" placeholder="Enter Course Code">
+<button onclick="loadData()">Fetch</button>
+
+<h3 id="courseInfo"></h3>
+
+<table id="mappingTable">
+    <thead>
+    <tr></tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div id="popup" class="popup">
+    <h3>Keywords Used</h3>
+    <div id="popupContent"></div>
+    <button onclick="closePopup()">Close</button>
+</div>
+
+<script>
+
+    const PO_COUNT = 12;
+    let globalCOs = [];
+
+    function loadData() {
+        const code = document.getElementById("courseCode").value;
+
+        fetch(`http://localhost:8081/course?courseCode=${code}`)
+            .then(res => res.json())
+            .then(data => {
+
+                document.getElementById("courseInfo").innerText =
+                    data.courseName + " (" + data.courseCode + ") - " + data.courseDescription;
+
+                globalCOs = data.courseOutcomesList;
+
+                buildTable(globalCOs);
+            });
+    }
+
+    function buildTable(cos) {
+
+        const tableHead = document.querySelector("#mappingTable thead tr");
+
+        // ✅ FIXED HEADER
+        tableHead.innerHTML = "<th>CO No</th><th>Course Outcome</th>";
+
+        for (let i = 1; i <= PO_COUNT; i++) {
+            tableHead.innerHTML += `<th>PO${i}</th>`;
+        }
+
+        const tbody = document.querySelector("#mappingTable tbody");
+        tbody.innerHTML = "";
+
+        cos.forEach((co, index) => {
+
+            const row = document.createElement("tr");
+
+            // ✅ FIXED ROW STRUCTURE (NO UNDEFINED)
+            row.innerHTML = `
+            <td>CO${index + 1}</td>
+            <td style="text-align:left">${co.CO}</td>
+        `;
+
+            for (let i = 1; i <= PO_COUNT; i++) {
+
+                let level = 0;
+                let keywordsUsed = [];
+
+                co.keywords.forEach(k => {
+                    k.reasons.forEach(r => {
+                        if (r.po === `PO${i}`) {
+                            level++;
+                            if (!keywordsUsed.includes(k.keyword)) {
+                                keywordsUsed.push(k.keyword);
+                            }
+                        }
+                    });
+                });
+
+                // ✅ SCORE CALCULATION
+                let score = level / 3;
+                let finalLevel = 0;
+
+                if (score >= 0.75) finalLevel = 3;
+                else if (score >= 0.5) finalLevel = 2;
+                else if (score >= 0.25) finalLevel = 1;
+
+                const cell = document.createElement("td");
+                cell.classList.add("cell");
+                cell.innerText = finalLevel;
+
+                // ✅ CLICK → SHOW ONLY KEYWORDS + CO
+                cell.onclick = () => {
+                    showPopup(index, i, keywordsUsed);
+                };
+
+                row.appendChild(cell);
+            }
+
+            tbody.appendChild(row);
+        });
+    }
+
+    function showPopup(coIndex, poIndex, keywords) {
+
+        const co = globalCOs[coIndex];
+
+        let html = `
+        <b>CO${coIndex + 1}:</b><br>${co.CO}<br><br>
+        <b>Mapped PO:</b> PO${poIndex}<br><br>
+        <b>Keywords Used:</b>
+        <ul>
+            ${keywords.map(k => `<li>${k}</li>`).join("")}
+        </ul>
+    `;
+
+        document.getElementById("popupContent").innerHTML = html;
+        document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
+
+</script>
+
+</body>
+</html>
