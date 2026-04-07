@@ -1,16 +1,14 @@
-You are an AI system that extracts important keywords from Course Outcomes.
+Extract key engineering skills from the following Course Objective (CO):
 
-Input:
 {CO}
 
-Instructions:
-1. Process each CO strictly in the given order (CO_1, CO_2, ...).
-2. Do NOT skip, merge, or reorder any CO.
-3. For each CO, extract 3 to 4 important keywords or short phrases about maximum 3 word.
-4. Each keyword must:
-   - Be maximum 3 words
-   - Represent a core concept, tool, or application
-   - Be useful for semantic mapping with Program Outcomes (POs)
-5. Avoid filler words (like "understand", "learn", "demonstrate" ..).
-6. Avoid repetition within the same CO.
-7. Keep keywords meaningful and domain-relevant.
+Guidelines:
+
+Provide at most minimum 3 max 4  bullet points .
+Each bullet point should be a concise, non-technical skill or competency directly derived from the CO.
+Use no more than two simple words per bullet point.
+Focus on practical, real-world gains for the student.
+Avoid repeating any words or synonyms used previously in this session or context.
+Avoid repetition and jargon.
+Use a professional tone.
+Emphasize unique, transferable skills derived directly from the CO.

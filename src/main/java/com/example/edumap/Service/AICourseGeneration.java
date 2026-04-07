@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Service
 public class AICourseGeneration {
@@ -20,20 +18,14 @@ public class AICourseGeneration {
     Resource generateCosMapping;
 
 
-    public List<List<String>> CoKeyGeneration(List<String> cosList, String level) {
-
-        AtomicInteger i = new AtomicInteger(1);
-        String formattedCOs = cosList.stream()
-                .map(co -> "CO_" + i.getAndIncrement() +" " + co)
-                .collect(Collectors.joining("\n"));
+    public List<String> CoKeyGeneration(String co, String level) {
 
 
-
-        List<List<String>> response = chatClient.prompt().user(u -> u.text(generateCosMapping).params(Map.of("CO",formattedCOs))).call().entity(CoKeys.class).keys;
+                    List<String> response = chatClient.prompt().user(u -> u.text(generateCosMapping).params(Map.of("CO",co))).call().entity(CoKeys.class).keys;
                     return response;
                 }
 
-                public record CoKeys(List<List<String>>keys){}
+                public record CoKeys(List<String>keys){}
 
 
             }
