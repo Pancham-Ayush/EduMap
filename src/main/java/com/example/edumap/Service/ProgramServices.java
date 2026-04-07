@@ -6,12 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Slf4j
@@ -54,11 +54,13 @@ public class ProgramServices {
             return null;
         Course course = courseOptional.get();
         List<result> resultList = new ArrayList<>();
+        List<List<String>> keys = aiCourseGeneration.CoKeyGeneration(COs, courseId);
+        AtomicInteger i = new AtomicInteger();
         for(String co : COs){
 
-            List<String> keys = aiCourseGeneration.CoKeyGeneration(co, courseId);
+
             result r =chatClient.prompt()
-                    .user(u -> u.text(COPO_Prompt).params(Map.of("KEYWORDS", keys,"CO",co)))
+                    .user(u -> u.text(COPO_Prompt).params(Map.of("KEYWORDS", keys.get(i.getAndIncrement()),"CO",co)))
                     .advisors(
                             QuestionAnswerAdvisor.builder(vectorStore).build()
                     )
