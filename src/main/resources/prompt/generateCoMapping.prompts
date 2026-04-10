@@ -20,7 +20,7 @@ EXTRACTION RULES:
 - Avoid repetition within the same CO.
 
 FILTERING RULES:
-- Exclude generic verbs (e.g., "understand", "learn", "demonstrate", "analyze", "apply") unless essential.
+- Exclude generic verbs unless essential.
 - Prefer domain-specific, technical, or measurable terms.
 - Ignore filler or instructional words unless required for meaning.
 
