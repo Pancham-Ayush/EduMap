@@ -17,11 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class ProgramServices {
 
-    @Value("classpath:prompt/po_co.txt")
-    private Resource prompt;
 
-    @Value("classpath:prompt/keyword_prompt")
-    private Resource semantic;
+
 
     @Value("classpath:prompt/COPO_Prompt.prompts")
     Resource COPO_Prompt;
