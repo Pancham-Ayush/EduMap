@@ -7,6 +7,7 @@ import com.example.edumap.Service.PO_EmbeddingGeneration;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
@@ -22,6 +23,7 @@ import java.util.*;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore("Requires local OpenAI, MariaDB, and vector store setup")
 public class PoGenerationTest {
 
     @Autowired

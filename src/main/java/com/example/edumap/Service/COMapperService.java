@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 @Service
 public class COMapperService {
@@ -19,11 +18,15 @@ public class COMapperService {
 
         Course course = courseRepo.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
+        course.getCourseOutcomesList().clear();
 
         for (ProgramServices.result result : results) {
+            if (result.co() == null || result.co().trim().isBlank()) {
+                continue;
+            }
 
             CourseOutcomes coEntity = new CourseOutcomes();
-            coEntity.setCO(result.co());
+            coEntity.setCO(result.co().trim());
 
             coEntity.setCourse(course);
             course.getCourseOutcomesList().add(coEntity);

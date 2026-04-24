@@ -3,6 +3,7 @@ package com.example.edumap;
 import edu.stanford.nlp.pipeline.*;
 import edu.stanford.nlp.ling.*;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -13,6 +14,7 @@ import java.util.*;
 
 @SpringBootTest
 @Slf4j
+@Disabled("Requires local MariaDB/vector store configuration")
 class EduMapApplicationTests {
 
     @Autowired
